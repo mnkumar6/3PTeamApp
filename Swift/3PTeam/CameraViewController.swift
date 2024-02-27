@@ -713,14 +713,14 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                         device.automaticallyEnablesLowLightBoostWhenAvailable = true
                     } else {
                         print("Low light is not supported")
-                        self.showAlert(message: "Low light is not supported")
+                        //self.showAlert(message: "Low light is not supported")
                     }
                 } else {
                     if device.isLowLightBoostSupported {
                         device.automaticallyEnablesLowLightBoostWhenAvailable = false
                     } else {
                         print("Low light is not supported")
-                        self.showAlert(message: "Low light is not supported")
+                        //self.showAlert(message: "Low light is not supported")
                     }
                 }
                 
@@ -802,7 +802,39 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     private func setUpPhotoSettings() -> AVCapturePhotoSettings {
         var photoSettings = AVCapturePhotoSettings()
         
-        // Capture HEIF photos when supported.
+//        if self.HDRVideoMode == .on {
+//            // Check for available photo pixel format types
+//            
+//            let availableFormats = photoOutput.availablePhotoPixelFormatTypes
+//
+//                print("Available photo pixel format types:")
+//                for format in availableFormats {
+//                    switch format {
+//                    case kCVPixelFormatType_32BGRA:
+//                        print("kCVPixelFormatType_32BGRA")
+//                    case kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange:
+//                        print("kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange")
+//                    case kCVPixelFormatType_422YpCbCr8BiPlanarFullRange:
+//                        print("kCVPixelFormatType_422YpCbCr8BiPlanarFullRange")
+//                    case kCVPixelFormatType_420YpCbCr10BiPlanarVideoRange:
+//                        print("kCVPixelFormatType_420YpCbCr10BiPlanarVideoRange")
+//                    case kCVPixelFormatType_422YpCbCr10BiPlanarFullRange:
+//                        print("kCVPixelFormatType_422YpCbCr10BiPlanarFullRange")
+//                    case kCVPixelFormatType_64ARGB:
+//                        print("kCVPixelFormatType_64ARGB")
+//                    default:
+//                        print("Unknown format: \(format)")
+//                    }
+//                }
+//            
+//            let desiredFormat = kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange
+//
+//            if availableFormats.contains(desiredFormat) {
+//                photoSettings = AVCapturePhotoSettings(format: [kCVPixelBufferPixelFormatTypeKey as String: desiredFormat])
+//            } else {
+//                print("Desired format not available. Using default format.")
+//            }
+//        } else 
         if self.photoOutput.availablePhotoCodecTypes.contains(AVVideoCodecType.hevc) {
             photoSettings = AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.hevc])
         } else {
@@ -934,7 +966,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             let devicePoint = CGPoint(x: 0.5, y: 0.5)
             DispatchQueue.main.async {
                 if device.isLowLightBoostSupported {
-                    print("exposure supported")
+                    print("LowLight supported")
                     if LowLightMode == .on {
                         self.ExposureButton.setTitle(" On", for: .normal)
                         print("LowLight ON")
